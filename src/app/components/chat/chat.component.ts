@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChatService } from '../../services/chat.service';
 import { FormsModule } from '@angular/forms';
-import { ChatMessage } from '../../models/chatMessage.model'; 
+import { ChatMessage } from '../../models/chatMessage.model';
 
 
 
@@ -19,9 +19,9 @@ import { ChatMessage } from '../../models/chatMessage.model';
 })
 export class ChatComponent implements OnInit {
   message: string = '';
-  messages: ChatMessage[] = []; ;
+  messages: ChatMessage[] = [];;
 
-  constructor(private chatService: ChatService) {}
+  constructor(private chatService: ChatService) { }
 
   ngOnInit(): void {
     this.listMessage();
@@ -29,7 +29,7 @@ export class ChatComponent implements OnInit {
 
   sendMessage(): void {
     if (this.message) {
-      this.messages.push({ text: this.message, type: 'sent' });;
+      this.messages.push({ text: this.message, type: 'sent', date: new Date() });;
       this.chatService.sendMessage(this.message);
       this.message = '';
       this.scrollToBottom(); // Forzar el scroll hacia abajo
@@ -37,15 +37,15 @@ export class ChatComponent implements OnInit {
     }
   }
 
-  listMessage(){
+  listMessage() {
     this.chatService.getMessage().subscribe((data) => {
       console.log('Mensaje recibido:', data);
-      this.messages.push({ text: data, type: 'received' });
+      this.messages.push({ text: this.message, type: 'received', date: data.date });
       console.log(data);
       this.scrollToBottom(); // Forzar el scroll hacia abajo cuando se recibe un mensaje
     });
   }
-  
+
   scrollToBottom(): void {
     const messageContainer = document.querySelector('.chat-messages');
     if (messageContainer) {

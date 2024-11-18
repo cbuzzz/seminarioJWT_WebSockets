@@ -7,8 +7,10 @@
 
   <!-- Contenedor de los mensajes -->
   <div class="chat-messages">
-    <div *ngFor="let data of messages"[ngClass]="{'message-receive': data.type === 'received', 'message-send': data.type === 'sent'}">
+    <div *ngFor="let data of messages"
+      [ngClass]="{'message-receive': data.type === 'received', 'message-send': data.type === 'sent'}">
       {{ data.text }}
+      <div class="message-date">{{ data.date | date:'short' }}</div>
     </div>
   </div>
 
@@ -19,4 +21,3 @@
   </div>
 
 </div>
-
